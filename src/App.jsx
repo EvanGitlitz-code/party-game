@@ -3,8 +3,9 @@ import { GAMES } from './games/index.js'
 import { SPICE_META, useGame } from './state/GameContext.jsx'
 import PlayerSetup from './components/PlayerSetup.jsx'
 import SpiceSlider from './components/SpiceSlider.jsx'
+import CustomPrompts from './components/CustomPrompts.jsx'
 
-function Home({ onPick }) {
+function Home({ onPick, onCustom }) {
   return (
     <div className="home">
       <header className="hero">
@@ -33,6 +34,10 @@ function Home({ onPick }) {
         </div>
       </section>
 
+      <button className="custom-cta" onClick={onCustom}>
+        ✍️ Add your own prompts
+      </button>
+
       <footer className="foot">
         <p>Please drink responsibly. Know your limits. 🚕 Never drink and drive.</p>
       </footer>
@@ -60,10 +65,9 @@ function GameView({ game, onBack }) {
 
 export default function App() {
   const [active, setActive] = useState(null)
+  const [screen, setScreen] = useState('home')
 
-  return active ? (
-    <GameView game={active} onBack={() => setActive(null)} />
-  ) : (
-    <Home onPick={setActive} />
-  )
+  if (active) return <GameView game={active} onBack={() => setActive(null)} />
+  if (screen === 'custom') return <CustomPrompts onBack={() => setScreen('home')} />
+  return <Home onPick={setActive} onCustom={() => setScreen('custom')} />
 }

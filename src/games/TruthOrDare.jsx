@@ -1,12 +1,13 @@
-import { useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
-import { truths, dares, bySpice } from '../data/prompts.js'
+import { usePool } from '../hooks/usePool.js'
 import { makeShuffler, randomItem } from '../utils.js'
+import { haptics } from '../haptics.js'
 
 export default function TruthOrDare() {
-  const { spice, players } = useGame()
-  const truthPool = useMemo(() => bySpice(truths, spice), [spice])
-  const darePool = useMemo(() => bySpice(dares, spice), [spice])
+  const { players } = useGame()
+  const truthPool = usePool('truths')
+  const darePool = usePool('dares')
 
   const truthNext = useRef(makeShuffler(truthPool))
   const dareNext = useRef(makeShuffler(darePool))
@@ -21,11 +22,13 @@ export default function TruthOrDare() {
   const [result, setResult] = useState(null)
 
   const pickPlayer = () => {
+    haptics.pick()
     setResult(null)
     setTurnPlayer(players.length ? randomItem(players) : { name: 'Someone' })
   }
 
   const choose = (kind) => {
+    haptics.tap()
     const next = kind === 'truth' ? truthNext.current() : dareNext.current()
     setResult({ kind, text: next?.text ?? '—' })
   }

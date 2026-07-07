@@ -28,18 +28,45 @@ function loadInitial() {
   }
 }
 
+const EMPTY_CUSTOM = { neverHaveIEver: [], mostLikelyTo: [], truths: [], dares: [] }
+
 export function GameProvider({ children }) {
   const saved = loadInitial()
   const [players, setPlayers] = useState(saved?.players ?? [])
   const [spice, setSpice] = useState(saved?.spice ?? SPICE.SPICY)
+  const [customPrompts, setCustomPrompts] = useState({
+    ...EMPTY_CUSTOM,
+    ...(saved?.customPrompts ?? {}),
+  })
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ players, spice }))
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ players, spice, customPrompts }),
+      )
     } catch {
       /* storage unavailable — fine, we just don't persist */
     }
-  }, [players, spice])
+  }, [players, spice, customPrompts])
+
+  const addCustomPrompt = (category, text, level) => {
+    const clean = text.trim()
+    if (!clean || !(category in EMPTY_CUSTOM)) return
+    setCustomPrompts((prev) => ({
+      ...prev,
+      [category]: [
+        ...prev[category],
+        { id: crypto.randomUUID(), text: clean, level, custom: true },
+      ],
+    }))
+  }
+
+  const removeCustomPrompt = (category, id) =>
+    setCustomPrompts((prev) => ({
+      ...prev,
+      [category]: prev[category].filter((p) => p.id !== id),
+    }))
 
   const addPlayer = (name) => {
     const clean = name.trim()
@@ -56,8 +83,18 @@ export function GameProvider({ children }) {
   const clearPlayers = () => setPlayers([])
 
   const value = useMemo(
-    () => ({ players, addPlayer, removePlayer, clearPlayers, spice, setSpice }),
-    [players, spice],
+    () => ({
+      players,
+      addPlayer,
+      removePlayer,
+      clearPlayers,
+      spice,
+      setSpice,
+      customPrompts,
+      addCustomPrompt,
+      removeCustomPrompt,
+    }),
+    [players, spice, customPrompts],
   )
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>

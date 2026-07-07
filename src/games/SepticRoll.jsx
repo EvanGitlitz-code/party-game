@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
 import { rollOutcomeText } from '../data/septicRoll.js'
 import { rollDie, randomItem } from '../utils.js'
+import { haptics } from '../haptics.js'
 
 const PIPS = { 1: '⚀', 2: '⚁', 3: '⚂', 4: '⚃', 5: '⚄', 6: '⚅' }
 
@@ -13,6 +14,7 @@ export default function SepticRoll() {
 
   const roll = () => {
     if (rolling) return
+    haptics.roll()
     setRolling(true)
     setOutcome(null)
     // Quick shuffle animation, then settle.
@@ -27,6 +29,7 @@ export default function SepticRoll() {
         const sum = final[0] + final[1]
         const who = players.length ? randomItem(players).name : 'Someone'
         setOutcome({ sum, ...rollOutcomeText(sum, spice, who) })
+        haptics.win()
         setRolling(false)
       }
     }, 70)

@@ -1,10 +1,9 @@
 import SimplePromptGame from './SimplePromptGame.jsx'
-import { neverHaveIEver } from '../data/prompts.js'
 
 export default function NeverHaveIEver() {
   return (
     <SimplePromptGame
-      list={neverHaveIEver}
+      category="neverHaveIEver"
       cta="Next one"
       hint="Everyone who HAS done it takes a drink."
     />

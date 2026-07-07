@@ -110,3 +110,16 @@ export const wheelChallenges = [
 export function bySpice(list, spice) {
   return list.filter((item) => item.level <= spice)
 }
+
+// The prompt categories players can add their own content to.
+// `key` matches the storage bucket in GameContext.
+export const CATEGORIES = [
+  { key: 'neverHaveIEver', label: 'Never Have I Ever', emoji: '🙊', base: neverHaveIEver },
+  { key: 'mostLikelyTo', label: 'Most Likely To', emoji: '👉', base: mostLikelyTo },
+  { key: 'truths', label: 'Truths', emoji: '💬', base: truths },
+  { key: 'dares', label: 'Dares', emoji: '🔥', base: dares },
+]
+
+export const BASE_BY_KEY = Object.fromEntries(
+  CATEGORIES.map((c) => [c.key, c.base]),
+)

@@ -11,3 +11,13 @@ createRoot(document.getElementById('root')).render(
     </GameProvider>
   </StrictMode>,
 )
+
+// Register the service worker for offline / installable PWA support.
+// Only in production builds — the dev server doesn't serve /sw.js.
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      /* offline support is a progressive enhancement — ignore failures */
+    })
+  })
+}

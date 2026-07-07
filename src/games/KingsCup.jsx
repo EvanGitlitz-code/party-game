@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
 import { SUITS, RANKS, cardRules } from '../data/kingsCup.js'
+import { haptics } from '../haptics.js'
 
 function buildDeck() {
   const deck = []
@@ -21,6 +22,7 @@ export default function KingsCup() {
 
   const draw = () => {
     if (deck.length === 0) return
+    haptics.pick()
     const next = deck[0]
     setDeck((d) => d.slice(1))
     setCard(next)

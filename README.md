@@ -30,13 +30,33 @@ night or a wild one:
 Prompts are tagged by level and a game only shows content at or below the
 selected spice, so lowering the slider instantly makes everything tamer.
 
-Players and spice preference are saved to `localStorage`, so they survive a
-refresh.
+Players, spice preference, and custom prompts are saved to `localStorage`, so
+they survive a refresh.
+
+## ✍️ Custom prompts
+
+Tap **Add your own prompts** on the home screen to write your own for Never
+Have I Ever, Most Likely To, Truths, and Dares. Each prompt gets a spice level
+and is mixed straight into the game's deck — so inside jokes and personal
+call-outs show up alongside the built-ins.
+
+## 📲 Install & offline (PWA)
+
+Septic is a Progressive Web App. On a phone, open it in the browser and choose
+**Add to Home Screen** — it installs like a native app (its own icon, full
+screen, no address bar) and works **offline** after the first load thanks to a
+service worker that caches the app shell.
+
+## 📳 Haptics
+
+On supported phones, rolls, draws, and picks give a little vibration for extra
+game-show energy. It's a silent no-op everywhere else.
 
 ## Tech
 
 - [React](https://react.dev/) + [Vite](https://vite.dev/)
 - No backend — everything runs client-side, works offline once loaded
+- Installable PWA (`public/manifest.webmanifest` + `public/sw.js`)
 - Mobile-first, dark neon theme
 
 ## Getting started
