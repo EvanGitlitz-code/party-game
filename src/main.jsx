@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')).render(
 // Only in production builds — the dev server doesn't serve /sw.js.
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {
       /* offline support is a progressive enhancement — ignore failures */
     })
   })

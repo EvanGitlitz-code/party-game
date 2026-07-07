@@ -3,8 +3,12 @@
 // falling back to the network and caching whatever it fetches (so the
 // hashed JS/CSS bundles get cached on first load without knowing their names).
 
-const CACHE = 'septic-v1'
-const SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icon.svg']
+const CACHE = 'septic-v2'
+// The SW is served from the app's base dir (e.g. "/" locally or "/Septic/" on
+// GitHub Pages). Derive that base from this file's own URL so the cached shell
+// paths are correct regardless of where the app is hosted.
+const BASE = self.location.pathname.replace(/sw\.js$/, '')
+const SHELL = [BASE, BASE + 'index.html', BASE + 'manifest.webmanifest', BASE + 'icon.svg']
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -41,7 +45,7 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(() => {
           // Offline and not cached — for navigations, fall back to the shell.
-          if (request.mode === 'navigate') return caches.match('/index.html')
+          if (request.mode === 'navigate') return caches.match(BASE + 'index.html')
           return Response.error()
         })
     }),
