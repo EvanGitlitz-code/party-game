@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main", "claude/party-drinking-game-app-14gj9z"]
+    branches: ["main"]
   workflow_dispatch:
 
 # Allow the workflow to publish to GitHub Pages.
