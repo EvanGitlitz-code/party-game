@@ -1,0 +1,268 @@
+:root {
+  --bg: #0b0b12;
+  --bg-2: #14141f;
+  --card: #1b1b2b;
+  --card-2: #23233a;
+  --text: #f4f3ff;
+  --muted: #a6a3c4;
+  --accent: #7c5cff;
+  --stroke: rgba(255, 255, 255, 0.08);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root { min-height: 100%; }
+
+body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(124, 92, 255, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 0% 10%, rgba(255, 92, 138, 0.14), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: 'Trebuchet MS', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+button { font-family: inherit; cursor: pointer; border: none; color: inherit; }
+input { font-family: inherit; }
+
+/* ---------- Layout ---------- */
+.home {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 18px 48px;
+}
+
+.hero { text-align: center; padding: 18px 0 8px; }
+.logo {
+  font-size: clamp(48px, 16vw, 84px);
+  font-weight: 900;
+  letter-spacing: 6px;
+  background: linear-gradient(120deg, #7c5cff, #ff5c8a 55%, #ffb020);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 24px rgba(124, 92, 255, 0.4));
+}
+.tagline { color: var(--muted); margin-top: 4px; font-size: 15px; }
+
+/* ---------- Players ---------- */
+.players, .spice, .catalog {
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: 20px;
+  padding: 18px;
+  margin-top: 18px;
+}
+.players-head, .spice-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.players-head h2, .catalog h2 { font-size: 17px; letter-spacing: 0.5px; }
+.count {
+  background: var(--accent); color: #fff; font-size: 12px;
+  border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: middle;
+}
+.ghost-btn {
+  background: transparent; color: var(--muted); font-size: 13px;
+  border: 1px solid var(--stroke); border-radius: 999px; padding: 4px 12px;
+}
+.ghost-btn:active { transform: scale(0.96); }
+
+.player-form { display: flex; gap: 8px; margin-top: 12px; }
+.player-form input {
+  flex: 1; background: var(--bg-2); border: 1px solid var(--stroke);
+  color: var(--text); border-radius: 12px; padding: 12px 14px; font-size: 16px;
+  outline: none;
+}
+.player-form input:focus { border-color: var(--accent); }
+.add-btn {
+  width: 48px; border-radius: 12px; font-size: 24px; font-weight: 700;
+  background: linear-gradient(135deg, #7c5cff, #ff5c8a); color: #fff;
+}
+.add-btn:active { transform: scale(0.94); }
+
+.empty-hint { color: var(--muted); font-size: 13px; margin-top: 12px; line-height: 1.5; }
+.player-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--card-2); border: 1px solid var(--stroke);
+  padding: 7px 8px 7px 13px; border-radius: 999px; font-size: 14px;
+}
+.chip button {
+  background: rgba(255, 255, 255, 0.08); border-radius: 50%;
+  width: 20px; height: 20px; font-size: 15px; line-height: 1; color: var(--muted);
+}
+.chip button:active { transform: scale(0.9); }
+
+/* ---------- Spice slider ---------- */
+.spice-label { font-size: 15px; }
+.spice-blurb { color: var(--muted); font-size: 12px; text-align: right; }
+.spice-range {
+  width: 100%; margin-top: 16px; height: 8px; border-radius: 999px;
+  -webkit-appearance: none; appearance: none; outline: none;
+  background: linear-gradient(90deg, #2fd4a8, #ffb020 50%, #ff3d5e);
+}
+.spice-range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #fff; border: 3px solid var(--accent);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5); cursor: pointer;
+}
+.spice-range.level-2::-webkit-slider-thumb { border-color: #ffb020; }
+.spice-range.level-3::-webkit-slider-thumb { border-color: #ff3d5e; }
+.spice-range::-moz-range-thumb {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #fff; border: 3px solid var(--accent); cursor: pointer;
+}
+.spice-ticks { display: flex; justify-content: space-between; margin-top: 10px; }
+.spice-ticks span { color: var(--muted); font-size: 12px; transition: color 0.2s; }
+.spice-ticks span.on { color: var(--text); font-weight: 700; }
+
+/* ---------- Game grid ---------- */
+.game-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px;
+}
+.game-tile {
+  --accent: #7c5cff;
+  text-align: left; background: var(--card-2);
+  border: 1px solid var(--stroke); border-radius: 18px; padding: 16px;
+  display: flex; flex-direction: column; gap: 4px; min-height: 118px;
+  position: relative; overflow: hidden; transition: transform 0.12s;
+}
+.game-tile::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(120px 80px at 100% 0%, var(--accent), transparent 70%);
+  opacity: 0.28;
+}
+.game-tile:active { transform: scale(0.97); }
+.tile-emoji { font-size: 30px; }
+.tile-title { font-size: 16px; font-weight: 800; margin-top: 4px; }
+.tile-tagline { font-size: 12px; color: var(--muted); position: relative; }
+
+.foot { text-align: center; margin-top: 26px; }
+.foot p { color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+/* ---------- Game view ---------- */
+.game-view {
+  --accent: #7c5cff;
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; flex-direction: column;
+  max-width: 640px; margin: 0 auto;
+}
+.game-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 18px; border-bottom: 1px solid var(--stroke);
+  position: sticky; top: 0; backdrop-filter: blur(8px);
+  background: rgba(11, 11, 18, 0.7); z-index: 5;
+}
+.back-btn {
+  background: var(--card-2); border: 1px solid var(--stroke);
+  border-radius: 999px; padding: 8px 14px; font-size: 14px; font-weight: 600;
+}
+.back-btn:active { transform: scale(0.95); }
+.game-name { font-weight: 800; font-size: 16px; }
+.spice-pill {
+  background: var(--card-2); border: 1px solid var(--stroke);
+  border-radius: 999px; padding: 6px 12px; font-size: 15px;
+}
+.game-body {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 24px 18px;
+}
+
+/* ---------- Prompt stage (shared) ---------- */
+.prompt-stage {
+  width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px;
+}
+.big-card {
+  width: 100%; min-height: 260px;
+  background: linear-gradient(160deg, var(--card-2), var(--card));
+  border: 1px solid var(--stroke); border-radius: 26px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; padding: 28px 24px; text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  transition: transform 0.12s;
+}
+button.big-card:active { transform: scale(0.98); }
+.big-card.static { cursor: default; }
+.prompt-text { font-size: clamp(20px, 6vw, 27px); font-weight: 700; line-height: 1.35; }
+.prompt-placeholder { font-size: 20px; color: var(--muted); }
+.kind-tag {
+  font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--accent); background: rgba(124, 92, 255, 0.12);
+  padding: 6px 14px; border-radius: 999px;
+}
+.hint { color: var(--muted); font-size: 13px; text-align: center; margin-top: -8px; }
+
+.primary-btn {
+  width: 100%; padding: 18px; border-radius: 18px; font-size: 18px; font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), #ff5c8a);
+  color: #fff; letter-spacing: 0.5px;
+  box-shadow: 0 10px 30px rgba(124, 92, 255, 0.35);
+  transition: transform 0.1s, filter 0.1s;
+}
+.primary-btn:active { transform: translateY(2px); filter: brightness(1.05); }
+.primary-btn:disabled { opacity: 0.6; }
+
+/* ---------- Truth or Dare ---------- */
+.turn-banner {
+  font-size: 22px; font-weight: 800; text-align: center;
+  padding: 14px 20px; border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--stroke); width: 100%;
+}
+.tod-choice { display: flex; gap: 14px; width: 100%; }
+.choice-btn {
+  flex: 1; padding: 40px 12px; border-radius: 22px; font-size: 22px; font-weight: 800;
+  transition: transform 0.1s;
+}
+.choice-btn:active { transform: scale(0.96); }
+.choice-btn.truth { background: linear-gradient(150deg, #2f8fff, #2fd4a8); color: #041018; }
+.choice-btn.dare { background: linear-gradient(150deg, #ff6b3d, #ff3d5e); color: #fff; }
+.big-card.dare .kind-tag { color: #ff6b3d; background: rgba(255, 107, 61, 0.14); }
+.big-card.truth .kind-tag { color: #2fd4a8; background: rgba(47, 212, 168, 0.14); }
+
+/* ---------- Septic Roll dice ---------- */
+.dice-row { display: flex; gap: 18px; font-size: 78px; line-height: 1; }
+.dice-row .die {
+  filter: drop-shadow(0 8px 20px rgba(124, 92, 255, 0.4));
+  transition: transform 0.1s;
+}
+.dice-row.rolling .die { animation: shake 0.2s infinite; }
+@keyframes shake {
+  0%, 100% { transform: rotate(-12deg) translateY(0); }
+  50% { transform: rotate(12deg) translateY(-6px); }
+}
+.big-card.roll .prompt-text { font-size: clamp(19px, 5.5vw, 24px); }
+
+/* ---------- Kings Cup ---------- */
+.deck-meta {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  color: var(--muted); font-size: 14px;
+}
+.playing-card {
+  width: 100%; min-height: 300px; background: #fdfdfb; color: #14141f;
+  border-radius: 24px; padding: 24px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); position: relative;
+}
+.card-corner {
+  position: absolute; top: 16px; left: 18px; font-size: 30px; font-weight: 900;
+}
+.card-corner.red { color: #e0264a; }
+.card-corner.black { color: #14141f; }
+.card-rule-title {
+  font-size: 26px; font-weight: 900; letter-spacing: 0.5px; margin-top: 20px;
+}
+.card-rule-text { font-size: 17px; line-height: 1.4; color: #333; max-width: 340px; }
+
+/* ---------- Spin wheel ---------- */
+.wheel { font-size: 88px; line-height: 1; transition: transform 0.2s; }
+.wheel.spin { animation: spin 0.5s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (min-width: 480px) {
+  .game-grid { gap: 14px; }
+}
