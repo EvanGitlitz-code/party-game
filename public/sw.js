@@ -1,9 +1,10 @@
-// Simple offline-first service worker.
-// Precaches the app shell, then serves same-origin GETs cache-first,
-// falling back to the network and caching whatever it fetches (so the
-// hashed JS/CSS bundles get cached on first load without knowing their names).
+// Offline-capable service worker.
+// - Navigations (the HTML page) are network-first, so a fresh deploy shows up
+//   immediately; the cached shell is only used when offline.
+// - Everything else (content-hashed JS/CSS, icons) is cache-first, since a new
+//   build produces new filenames and can never serve a stale asset.
 
-const CACHE = 'septic-v2'
+const CACHE = 'septic-v3'
 // The SW is served from the app's base dir (e.g. "/" locally or "/Septic/" on
 // GitHub Pages). Derive that base from this file's own URL so the cached shell
 // paths are correct regardless of where the app is hosted.
@@ -31,23 +32,31 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
+  const cachePut = (res) => {
+    if (res.ok && res.type === 'basic') {
+      const copy = res.clone()
+      caches.open(CACHE).then((c) => c.put(request, copy))
+    }
+    return res
+  }
+
+  // Network-first for page navigations so new deploys appear right away.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then(cachePut)
+        .catch(() => caches.match(request).then((c) => c || caches.match(BASE + 'index.html'))),
+    )
+    return
+  }
+
+  // Cache-first for content-hashed assets and other same-origin GETs.
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) return cached
       return fetch(request)
-        .then((res) => {
-          // Only cache successful, basic (same-origin) responses.
-          if (res.ok && res.type === 'basic') {
-            const copy = res.clone()
-            caches.open(CACHE).then((c) => c.put(request, copy))
-          }
-          return res
-        })
-        .catch(() => {
-          // Offline and not cached — for navigations, fall back to the shell.
-          if (request.mode === 'navigate') return caches.match(BASE + 'index.html')
-          return Response.error()
-        })
+        .then(cachePut)
+        .catch(() => Response.error())
     }),
   )
 })
