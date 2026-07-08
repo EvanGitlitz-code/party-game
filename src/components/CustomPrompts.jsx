@@ -74,8 +74,8 @@ export default function CustomPrompts({ onBack }) {
           </h3>
           {list.length === 0 ? (
             <p className="empty-hint">
-              No custom prompts yet. Add one above — it’ll show up in the game at
-              its spice level and hotter.
+              No custom prompts yet. Add one above — it’ll show up in the game
+              when the spice is set to that level.
             </p>
           ) : (
             <ul>

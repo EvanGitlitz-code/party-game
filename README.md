@@ -28,8 +28,10 @@ night or a wild one:
 - **🌶️ Spicy** — flirty, bold, a little chaos
 - **🔥 Full Send** — adults only, no filter
 
-Prompts are tagged by level and a game only shows content at or below the
-selected spice, so lowering the slider instantly makes everything tamer.
+Prompts are tagged by level and each game shows **only** the content at the
+selected spice — Tame, Spicy, and Full Send each have their own distinct set,
+so moving the slider genuinely changes what you get (Full Send is all killers,
+no filler).
 
 Players, spice preference, and custom prompts are saved to `localStorage`, so
 they survive a refresh.

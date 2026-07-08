@@ -1,12 +1,12 @@
 import { useMemo, useRef, useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
-import { wheelChallenges, bySpice } from '../data/prompts.js'
+import { wheelChallenges, atSpice } from '../data/prompts.js'
 import { makeShuffler, randomItem } from '../utils.js'
 import { haptics } from '../haptics.js'
 
 export default function SpinWheel() {
   const { spice, players } = useGame()
-  const pool = useMemo(() => bySpice(wheelChallenges, spice), [spice])
+  const pool = useMemo(() => atSpice(wheelChallenges, spice), [spice])
   const nextRef = useRef(makeShuffler(pool))
   const key = pool.map((p) => p.text).join('|')
   const lastKey = useRef(key)
