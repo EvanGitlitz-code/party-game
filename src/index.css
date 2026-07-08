@@ -39,15 +39,17 @@ input { font-family: inherit; }
 
 .hero { text-align: center; padding: 18px 0 8px; }
 .logo {
-  font-size: clamp(48px, 16vw, 84px);
+  font-size: clamp(40px, 13vw, 72px);
   font-weight: 900;
-  letter-spacing: 6px;
+  letter-spacing: 4px;
+  line-height: 0.95;
   background: linear-gradient(120deg, #7c5cff, #ff5c8a 55%, #ffb020);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 4px 24px rgba(124, 92, 255, 0.4));
 }
+.logo span { display: block; }
 .tagline { color: var(--muted); margin-top: 4px; font-size: 15px; }
 
 /* ---------- Players ---------- */
@@ -140,6 +142,13 @@ input { font-family: inherit; }
 .tile-emoji { font-size: 30px; }
 .tile-title { font-size: 16px; font-weight: 800; margin-top: 4px; }
 .tile-tagline { font-size: 12px; color: var(--muted); position: relative; }
+.tile-info {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text); font-size: 14px; font-weight: 800; line-height: 1;
+}
+.tile-info:active { transform: scale(0.9); }
 
 .foot { text-align: center; margin-top: 26px; }
 .foot p { color: var(--muted); font-size: 12px; line-height: 1.5; }
@@ -163,6 +172,13 @@ input { font-family: inherit; }
 }
 .back-btn:active { transform: scale(0.95); }
 .game-name { font-weight: 800; font-size: 16px; }
+.header-right { display: flex; align-items: center; gap: 8px; }
+.info-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--card-2); border: 1px solid var(--stroke);
+  color: var(--text); font-size: 16px; font-weight: 800; line-height: 1;
+}
+.info-btn:active { transform: scale(0.92); }
 .spice-pill {
   background: var(--card-2); border: 1px solid var(--stroke);
   border-radius: 999px; padding: 6px 12px; font-size: 15px;
@@ -224,7 +240,7 @@ button.big-card:active { transform: scale(0.98); }
 .big-card.dare .kind-tag { color: #ff6b3d; background: rgba(255, 107, 61, 0.14); }
 .big-card.truth .kind-tag { color: #2fd4a8; background: rgba(47, 212, 168, 0.14); }
 
-/* ---------- Septic Roll dice ---------- */
+/* ---------- Lucky Sevens dice ---------- */
 .dice-row { display: flex; gap: 18px; font-size: 78px; line-height: 1; }
 .dice-row .die {
   filter: drop-shadow(0 8px 20px rgba(124, 92, 255, 0.4));
@@ -320,6 +336,50 @@ button.big-card:active { transform: scale(0.98); }
   width: 26px; height: 26px; border-radius: 50%; font-size: 18px; line-height: 1;
 }
 .del-btn:active { transform: scale(0.9); }
+
+/* ---------- Instructions sheet ---------- */
+.sheet-backdrop {
+  position: fixed; inset: 0; z-index: 20;
+  background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px);
+  display: flex; align-items: flex-end; justify-content: center;
+  animation: fade-in 0.2s ease;
+}
+.sheet {
+  width: 100%; max-width: 640px;
+  background: var(--card); border: 1px solid var(--stroke);
+  border-bottom: none; border-radius: 26px 26px 0 0;
+  padding: 14px 22px calc(24px + env(safe-area-inset-bottom));
+  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.5);
+  animation: slide-up 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
+  max-height: 88vh; overflow-y: auto;
+}
+.sheet-grip {
+  width: 44px; height: 5px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22); margin: 0 auto 16px;
+}
+.sheet-title { font-size: 18px; font-weight: 800; }
+.sheet-goal {
+  color: var(--text); font-size: 15px; margin-top: 8px; line-height: 1.4;
+  padding: 12px 14px; border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 3px solid var(--accent);
+}
+.sheet-steps { list-style: none; margin: 18px 0 6px; display: flex; flex-direction: column; gap: 12px; }
+.sheet-steps li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.4; }
+.step-num {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-size: 14px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.sheet-tip {
+  color: var(--muted); font-size: 13px; line-height: 1.5;
+  margin: 14px 0 20px; padding: 10px 14px; border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.sheet .primary-btn { margin-top: 6px; }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
 @media (min-width: 480px) {
   .game-grid { gap: 14px; }

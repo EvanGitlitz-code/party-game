@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
-import { rollOutcomeText } from '../data/septicRoll.js'
+import { rollOutcomeText } from '../data/luckySevens.js'
 import { rollDie, randomItem } from '../utils.js'
 import { haptics } from '../haptics.js'
 
 const PIPS = { 1: '⚀', 2: '⚁', 3: '⚂', 4: '⚃', 5: '⚄', 6: '⚅' }
 
-export default function SepticRoll() {
+export default function LuckySevens() {
   const { spice, players } = useGame()
   const [dice, setDice] = useState([1, 1])
   const [outcome, setOutcome] = useState(null)

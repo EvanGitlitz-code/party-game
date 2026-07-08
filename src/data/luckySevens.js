@@ -1,4 +1,4 @@
-// Septic Roll — the signature game. Roll two dice; the sum lands on an outcome.
+// Lucky Sevens — the signature game. Roll two dice; the sum lands on an outcome.
 // Outcomes scale with spice. {player} is replaced with a random player's name.
 
 export const rollOutcomes = {
