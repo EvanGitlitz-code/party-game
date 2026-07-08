@@ -36,6 +36,14 @@ no filler).
 Players, spice preference, and custom prompts are saved to `localStorage`, so
 they survive a refresh.
 
+## ♾️ Endless prompts
+
+The prompt games never run out. Each game blends its hand-written prompts with
+a **procedural generator** (`src/data/generator.js`) that fills templates from
+tiered word banks, producing hundreds of coherent, non-repeating combinations
+per spice level — all client-side, no server or API needed. It stays offline
+and free while feeling infinite.
+
 ## ✍️ Custom prompts
 
 Tap **Add your own prompts** on the home screen to write your own for Never
@@ -77,7 +85,8 @@ Then open the printed URL on your phone (same Wi-Fi) or in a browser.
 
 All the prompts live in `src/data/`:
 
-- `prompts.js` — Never Have I Ever, Most Likely To, Truths, Dares, Wheel
+- `prompts.js` — hand-written Never Have I Ever, Most Likely To, Truths, Dares, Wheel
+- `generator.js` — templates + word banks that generate endless prompts
 - `kingsCup.js` — the card rules
 - `luckySevens.js` — dice outcomes
 

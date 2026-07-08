@@ -1,22 +1,13 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
-import { usePool } from '../hooks/usePool.js'
-import { makeShuffler, randomItem } from '../utils.js'
+import { usePromptSource } from '../hooks/usePromptSource.js'
+import { randomItem } from '../utils.js'
 import { haptics } from '../haptics.js'
 
 export default function TruthOrDare() {
   const { players } = useGame()
-  const truthPool = usePool('truths')
-  const darePool = usePool('dares')
-
-  const truthNext = useRef(makeShuffler(truthPool))
-  const dareNext = useRef(makeShuffler(darePool))
-  const tKey = truthPool.map((t) => t.text).join('|')
-  const dKey = darePool.map((d) => d.text).join('|')
-  const lastT = useRef(tKey)
-  const lastD = useRef(dKey)
-  if (lastT.current !== tKey) { lastT.current = tKey; truthNext.current = makeShuffler(truthPool) }
-  if (lastD.current !== dKey) { lastD.current = dKey; dareNext.current = makeShuffler(darePool) }
+  const truthSource = usePromptSource('truths')
+  const dareSource = usePromptSource('dares')
 
   const [turnPlayer, setTurnPlayer] = useState(null)
   const [result, setResult] = useState(null)
@@ -29,7 +20,7 @@ export default function TruthOrDare() {
 
   const choose = (kind) => {
     haptics.tap()
-    const next = kind === 'truth' ? truthNext.current() : dareNext.current()
+    const next = kind === 'truth' ? truthSource.next() : dareSource.next()
     setResult({ kind, text: next?.text ?? '—' })
   }
 

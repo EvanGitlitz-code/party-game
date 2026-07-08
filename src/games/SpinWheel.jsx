@@ -1,16 +1,12 @@
-import { useMemo, useRef, useState } from 'react'
+import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
-import { wheelChallenges, atSpice } from '../data/prompts.js'
-import { makeShuffler, randomItem } from '../utils.js'
+import { usePromptSource } from '../hooks/usePromptSource.js'
+import { randomItem } from '../utils.js'
 import { haptics } from '../haptics.js'
 
 export default function SpinWheel() {
-  const { spice, players } = useGame()
-  const pool = useMemo(() => atSpice(wheelChallenges, spice), [spice])
-  const nextRef = useRef(makeShuffler(pool))
-  const key = pool.map((p) => p.text).join('|')
-  const lastKey = useRef(key)
-  if (lastKey.current !== key) { lastKey.current = key; nextRef.current = makeShuffler(pool) }
+  const { players } = useGame()
+  const source = usePromptSource('wheel')
 
   const [spinning, setSpinning] = useState(false)
   const [result, setResult] = useState(null)
@@ -28,7 +24,7 @@ export default function SpinWheel() {
       if (ticks > 10) {
         clearInterval(iv)
         const who2 = players.length ? randomItem(players).name : 'Someone'
-        setResult({ who: who2, text: nextRef.current()?.text ?? '' })
+        setResult({ who: who2, text: source.next()?.text ?? '' })
         haptics.win()
         setSpinning(false)
       }
