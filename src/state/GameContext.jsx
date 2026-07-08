@@ -38,17 +38,21 @@ export function GameProvider({ children }) {
     ...EMPTY_CUSTOM,
     ...(saved?.customPrompts ?? {}),
   })
+  // Whether the user has confirmed they're of legal drinking age.
+  const [ageVerified, setAgeVerified] = useState(saved?.ageVerified ?? false)
 
   useEffect(() => {
     try {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ players, spice, customPrompts }),
+        JSON.stringify({ players, spice, customPrompts, ageVerified }),
       )
     } catch {
       /* storage unavailable — fine, we just don't persist */
     }
-  }, [players, spice, customPrompts])
+  }, [players, spice, customPrompts, ageVerified])
+
+  const verifyAge = () => setAgeVerified(true)
 
   const addCustomPrompt = (category, text, level) => {
     const clean = text.trim()
@@ -93,8 +97,10 @@ export function GameProvider({ children }) {
       customPrompts,
       addCustomPrompt,
       removeCustomPrompt,
+      ageVerified,
+      verifyAge,
     }),
-    [players, spice, customPrompts],
+    [players, spice, customPrompts, ageVerified],
   )
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>

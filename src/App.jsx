@@ -5,8 +5,10 @@ import PlayerSetup from './components/PlayerSetup.jsx'
 import SpiceSlider from './components/SpiceSlider.jsx'
 import CustomPrompts from './components/CustomPrompts.jsx'
 import Instructions from './components/Instructions.jsx'
+import AgeGate from './components/AgeGate.jsx'
+import About from './components/About.jsx'
 
-function Home({ onPick, onCustom }) {
+function Home({ onPick, onCustom, onAbout }) {
   const [helpGame, setHelpGame] = useState(null)
 
   const openHelp = (e, game) => {
@@ -63,6 +65,7 @@ function Home({ onPick, onCustom }) {
 
       <footer className="foot">
         <p>Please drink responsibly. Know your limits. 🚕 Never drink and drive.</p>
+        <button className="link-btn" onClick={onAbout}>About · Privacy · Terms</button>
       </footer>
 
       {helpGame && <Instructions game={helpGame} onClose={() => setHelpGame(null)} />}
@@ -100,10 +103,19 @@ function GameView({ game, onBack }) {
 }
 
 export default function App() {
+  const { ageVerified } = useGame()
   const [active, setActive] = useState(null)
   const [screen, setScreen] = useState('home')
 
+  if (!ageVerified) return <AgeGate />
   if (active) return <GameView game={active} onBack={() => setActive(null)} />
   if (screen === 'custom') return <CustomPrompts onBack={() => setScreen('home')} />
-  return <Home onPick={setActive} onCustom={() => setScreen('custom')} />
+  if (screen === 'about') return <About onBack={() => setScreen('home')} />
+  return (
+    <Home
+      onPick={setActive}
+      onCustom={() => setScreen('custom')}
+      onAbout={() => setScreen('about')}
+    />
+  )
 }
