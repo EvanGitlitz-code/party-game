@@ -173,7 +173,7 @@ const G = {
         ],
         durAct: ['Talk in an accent', 'Do your best runway walk', 'Do your best robot dance', 'Freeze like a statue', 'Speak only in a whisper'],
         dur: ['30 seconds', 'one minute', 'the rest of the round', 'until your next turn'],
-        grp: ['pick a nickname for you tonight', 'choose an emoji you must use all night', 'pick your next dare', 'draw a tiny doodle on your hand'],
+        grp: ['see the last photo in your camera roll', 'read your most recent search out loud', 'doodle on the back of your hand'],
       },
     },
     2: {
@@ -188,7 +188,7 @@ const G = {
         ],
         durAct: ['Do your most seductive walk', 'Hold eye contact with the player across from you', 'Do a slow-motion dance', 'Talk like a soap-opera star'],
         dur: ['30 seconds', 'one full minute', 'until your next turn'],
-        grp: ['read your most recent search', 'pick your next profile picture', 'send one text from your phone', 'choose a truth you must answer'],
+        grp: ['read your most recent search out loud', 'see the last photo in your camera roll', 'send a one-word text from your phone'],
       },
     },
     3: {
@@ -203,7 +203,7 @@ const G = {
         ],
         durAct: ['Do your most seductive dance', 'Hold eye contact with the player on your left', 'Give a dramatic slow-motion wink to everyone'],
         dur: ['30 seconds', 'one full minute'],
-        grp: ['scroll your camera roll for 15 seconds', 'pick your next bold dare', 'read your last DM out loud', 'choose who you have to compliment'],
+        grp: ['scroll your camera roll for 15 seconds', 'read your last DM out loud', 'see your most-used emoji and who gets it'],
       },
     },
   },
@@ -214,8 +214,9 @@ const G = {
       banks: {
         act: [
           'takes two sips and tells a joke', 'shows off their best dance move',
-          'makes a rule for the next round', 'picks a drinking buddy for the round',
+          'takes a sip for every vowel in their first name', 'picks a drinking buddy for the round',
           'does an impression of the host', 'starts a group toast',
+          'shows the group their phone wallpaper',
         ],
         target: ['the person on their left', 'the person on their right', 'someone across the room'],
         gift: ['a genuine compliment', 'a high five', 'a dramatic toast'],
@@ -225,7 +226,7 @@ const G = {
       templates: ['{act}.'],
       banks: {
         act: [
-          'answers a truth or takes two sips', 'reveals their celebrity crush or drinks',
+          'reveals their most embarrassing moment or takes two sips', 'reveals their celebrity crush or drinks',
           'swaps a piece of clothing with someone', 'lets the group check their last text',
           'compliments someone until they blush', 'names who they’d get stuck in an elevator with',
           'lets someone screenshot their lock screen', 'texts an ex a single wave emoji',
@@ -236,10 +237,11 @@ const G = {
       templates: ['{act}.'],
       banks: {
         act: [
-          'takes a dare from anyone in the room', 'confesses the wildest thing they did this year',
-          'hands their phone to the group for 30 seconds', 'lets the player on their left pick their next dare',
+          'confesses the wildest thing they did this year',
+          'hands their phone to the group for 30 seconds',
           'reveals the last spicy thing in their search history', 'texts “I miss you” to the last person they dated',
           'shares their go-to pickup line', 'reveals who in the room they’d kiss',
+          'shows the group their most recent DM',
         ],
       },
     },
@@ -265,6 +267,48 @@ export function generate(category, level) {
 
 export function canGenerate(category, level) {
   return Boolean(G[category]?.[level])
+}
+
+// --- App-supplied game content ---------------------------------------------
+// So games never tell a player to "make up a rule / name a category / take a
+// dare from the group" — the app hands them a concrete one instead.
+
+const RULES = [
+  'no using first names — call everyone “champ” (slip up, take a sip)',
+  'no pointing at anyone — point and you drink',
+  'everyone drinks with their non-dominant hand',
+  'no swearing — a swear costs a sip',
+  'you can’t say the word “drink” — say “sip” instead',
+  'end every sentence with “…and that’s the tea”',
+  'no phones in hand — get caught holding one and drink',
+  'address the group like royalty until the next rule',
+  'anyone who laughs takes a sip',
+  'you must cheers someone before every drink',
+]
+
+const CATEGORIES = {
+  1: ['types of beer', 'car brands', 'pizza toppings', 'breakfast cereals', 'movie franchises', 'sports teams', 'ice cream flavors'],
+  2: ['dating-app red flags', 'celebrity crushes', 'worst pickup lines', 'reasons to text your ex', 'places to take a first date'],
+  3: ['turn-ons', 'things whispered in the bedroom', 'places people have hooked up', 'excuses after a one-night stand', 'body parts'],
+}
+
+const WORDS = ['night', 'drink', 'luck', 'heart', 'shot', 'kiss', 'game', 'roll', 'last', 'wild']
+
+const getRule = () => rand(RULES)
+const getCategory = (level) => rand(CATEGORIES[level] || CATEGORIES[1])
+const getWord = () => rand(WORDS)
+
+// Replace dynamic tokens in a piece of game text with concrete, app-supplied
+// content: {rule} {category} {word} {truth} {dare} {nhie} {question}.
+export function fillDynamic(text, spice) {
+  return text
+    .replace(/\{rule\}/g, () => getRule())
+    .replace(/\{category\}/g, () => getCategory(spice))
+    .replace(/\{word\}/g, () => getWord())
+    .replace(/\{truth\}/g, () => generate('truths', spice) || 'answer any question honestly')
+    .replace(/\{question\}/g, () => generate('truths', spice) || 'answer any question honestly')
+    .replace(/\{dare\}/g, () => generate('dares', spice) || 'take a sip')
+    .replace(/\{nhie\}/g, () => generate('neverHaveIEver', spice) || 'Never have I ever told a white lie.')
 }
 
 // An endless prompt source: blends the curated + custom prompts (at the given

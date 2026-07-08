@@ -23,7 +23,7 @@ export const GAMES = [
       steps: [
         'On your turn, tap Roll.',
         'Read the outcome for the total you rolled — it calls out a player and an action.',
-        'Do what it says: drink, dare, make a rule, or hand out sips.',
+        'Do what it says: drink, take the dare it gives you, follow the new rule, or hand out sips.',
         'Pass the phone to the next player and roll again.',
       ],
       tip: 'Seven is wild — and every outcome gets bolder as you raise the spice.',

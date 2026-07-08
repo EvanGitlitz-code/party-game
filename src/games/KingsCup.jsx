@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
 import { SUITS, RANKS, cardRules } from '../data/kingsCup.js'
+import { fillDynamic } from '../data/generator.js'
 import { haptics } from '../haptics.js'
 
 function buildDeck() {
@@ -25,7 +26,11 @@ export default function KingsCup() {
     haptics.pick()
     const next = deck[0]
     setDeck((d) => d.slice(1))
-    setCard(next)
+    // Resolve the rule text (and any {word}/{category}/{dare}/… tokens) once,
+    // at draw time, so it stays stable while the card is shown.
+    const rule = cardRules[next.rank]
+    const text = fillDynamic(rule[spice] || rule[1], spice)
+    setCard({ ...next, text })
   }
 
   const reset = () => {
@@ -34,7 +39,7 @@ export default function KingsCup() {
   }
 
   const rule = card ? cardRules[card.rank] : null
-  const ruleText = rule ? rule[spice] || rule[1] : null
+  const ruleText = card ? card.text : null
   const isRed = card && (card.suit === '♥' || card.suit === '♦')
   const drawn = 52 - deck.length
 
