@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
 import { rollOutcomeText } from '../data/luckySevens.js'
 import { rollDie, randomItem } from '../utils.js'
+import { useRoom } from '../state/RoomContext.jsx'
 import { haptics } from '../haptics.js'
 
 const PIPS = { 1: '⚀', 2: '⚁', 3: '⚂', 4: '⚃', 5: '⚄', 6: '⚅' }
 
 export default function LuckySevens() {
   const { spice, players, renderText } = useGame()
+  const { publishNow } = useRoom()
   const [dice, setDice] = useState([1, 1])
   const [outcome, setOutcome] = useState(null)
   const [rolling, setRolling] = useState(false)
@@ -28,7 +30,9 @@ export default function LuckySevens() {
         setDice(final)
         const sum = final[0] + final[1]
         const who = players.length ? randomItem(players).name : 'Someone'
-        setOutcome({ sum, ...rollOutcomeText(sum, spice, who) })
+        const result = { sum, ...rollOutcomeText(sum, spice, who) }
+        setOutcome(result)
+        publishNow({ game: 'Lucky Sevens', text: `${result.emoji} ${renderText(result.name)} · ${result.sum} — ${renderText(result.text)}` })
         haptics.win()
         setRolling(false)
       }

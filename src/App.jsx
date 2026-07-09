@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { GAMES } from './games/index.js'
 import { SPICE_META, useGame } from './state/GameContext.jsx'
+import { useRoom } from './state/RoomContext.jsx'
 import PlayerSetup from './components/PlayerSetup.jsx'
 import SpiceSlider from './components/SpiceSlider.jsx'
 import CustomPrompts from './components/CustomPrompts.jsx'
@@ -8,8 +9,20 @@ import Instructions from './components/Instructions.jsx'
 import AgeGate from './components/AgeGate.jsx'
 import About from './components/About.jsx'
 import DryToggle from './components/DryToggle.jsx'
+import MultiplayerLobby from './components/MultiplayerLobby.jsx'
+import GuestMirror from './components/GuestMirror.jsx'
 
-function Home({ onPick, onCustom, onAbout }) {
+function HostBanner({ onOpen }) {
+  const { mode, code, guestCount } = useRoom()
+  if (mode !== 'host') return null
+  return (
+    <button className="host-banner" onClick={onOpen}>
+      📡 Hosting room <strong>{code}</strong> · {guestCount} joined
+    </button>
+  )
+}
+
+function Home({ onPick, onCustom, onAbout, onMultiplayer }) {
   const [helpGame, setHelpGame] = useState(null)
 
   const openHelp = (e, game) => {
@@ -23,6 +36,12 @@ function Home({ onPick, onCustom, onAbout }) {
         <h1 className="logo"><span>PRE</span><span>GAME</span></h1>
         <p className="tagline">The party game night in your pocket 🍻</p>
       </header>
+
+      <HostBanner onOpen={onMultiplayer} />
+
+      <button className="multiplayer-cta" onClick={onMultiplayer}>
+        📱 Play on one phone or connect everyone’s
+      </button>
 
       <PlayerSetup />
       <SpiceSlider />
@@ -107,11 +126,22 @@ function GameView({ game, onBack }) {
 
 export default function App() {
   const { ageVerified } = useGame()
+  const { mode } = useRoom()
   const [active, setActive] = useState(null)
   const [screen, setScreen] = useState('home')
 
   if (!ageVerified) return <AgeGate />
+  // A guest device mirrors the host — it doesn't run games locally.
+  if (mode === 'guest') return <GuestMirror />
   if (active) return <GameView game={active} onBack={() => setActive(null)} />
+  if (screen === 'lobby') {
+    return (
+      <MultiplayerLobby
+        onBack={() => setScreen('home')}
+        onHosting={() => setScreen('home')}
+      />
+    )
+  }
   if (screen === 'custom') return <CustomPrompts onBack={() => setScreen('home')} />
   if (screen === 'about') return <About onBack={() => setScreen('home')} />
   return (
@@ -119,6 +149,7 @@ export default function App() {
       onPick={setActive}
       onCustom={() => setScreen('custom')}
       onAbout={() => setScreen('about')}
+      onMultiplayer={() => setScreen('lobby')}
     />
   )
 }

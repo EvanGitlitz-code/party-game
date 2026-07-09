@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
 import { SUITS, RANKS, cardRules } from '../data/kingsCup.js'
 import { fillDynamic } from '../data/generator.js'
+import { useRoom } from '../state/RoomContext.jsx'
 import { haptics } from '../haptics.js'
 
 function buildDeck() {
@@ -18,6 +19,7 @@ function buildDeck() {
 
 export default function KingsCup() {
   const { spice, renderText } = useGame()
+  const { publishNow } = useRoom()
   const [deck, setDeck] = useState(() => buildDeck())
   const [card, setCard] = useState(null)
 
@@ -31,6 +33,7 @@ export default function KingsCup() {
     const rule = cardRules[next.rank]
     const text = fillDynamic(rule[spice] || rule[1], spice)
     setCard({ ...next, text })
+    publishNow({ game: 'Kings Cup', text: `${next.rank}${next.suit} · ${renderText(rule.title)} — ${renderText(text)}` })
   }
 
   const reset = () => {

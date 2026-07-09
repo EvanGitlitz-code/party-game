@@ -36,6 +36,19 @@ no filler).
 Players, spice preference, and custom prompts are saved to `localStorage`, so
 they survive a refresh.
 
+## 📱 One phone or many
+
+Play two ways from the home screen (**Play on one phone or connect everyone’s**):
+
+- **One phone** — classic pass-and-play. Add names and share the screen.
+- **Multiple phones** — the host taps **Host a room** and gets a 4-letter code;
+  friends **Join a room** with that code from their own phones. Everyone shares
+  a roster and sees the host’s current prompt/card/roll on their own screen.
+
+Cross-device play is **peer-to-peer** (WebRTC via [PeerJS](https://peerjs.com/)):
+no server to run, no account, no cost, and no game data stored anywhere — it
+flows directly phone-to-phone. Works best when everyone has a decent connection.
+
 ## ♾️ Endless prompts
 
 The prompt games never run out. Each game blends its hand-written prompts with

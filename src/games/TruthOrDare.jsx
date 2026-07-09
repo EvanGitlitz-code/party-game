@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
 import { usePromptSource } from '../hooks/usePromptSource.js'
 import { randomItem } from '../utils.js'
+import { useRoom } from '../state/RoomContext.jsx'
 import { haptics } from '../haptics.js'
 
 export default function TruthOrDare() {
   const { players, renderText } = useGame()
+  const { publishNow } = useRoom()
   const truthSource = usePromptSource('truths')
   const dareSource = usePromptSource('dares')
 
@@ -15,13 +17,16 @@ export default function TruthOrDare() {
   const pickPlayer = () => {
     haptics.pick()
     setResult(null)
-    setTurnPlayer(players.length ? randomItem(players) : { name: 'Someone' })
+    const p = players.length ? randomItem(players) : { name: 'Someone' }
+    setTurnPlayer(p)
+    publishNow({ game: 'Truth or Dare', text: `🎲 ${p.name}, you’re up! Truth or Dare?` })
   }
 
   const choose = (kind) => {
     haptics.tap()
     const next = kind === 'truth' ? truthSource.next() : dareSource.next()
     setResult({ kind, text: next?.text ?? '—' })
+    publishNow({ game: 'Truth or Dare', text: `${kind === 'truth' ? '💬 Truth' : '🔥 Dare'} — ${renderText(next?.text ?? '—')}` })
   }
 
   return (

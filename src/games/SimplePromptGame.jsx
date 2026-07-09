@@ -1,18 +1,22 @@
 import { useState } from 'react'
 import { usePromptSource } from '../hooks/usePromptSource.js'
 import { useGame } from '../state/GameContext.jsx'
+import { useRoom } from '../state/RoomContext.jsx'
 import { haptics } from '../haptics.js'
 
 // A reusable "tap for the next prompt" card game. Prompts are endless: each tap
 // pulls a fresh one from the generator + curated/custom pool for this category.
-export default function SimplePromptGame({ category, cta = 'Next', hint }) {
+export default function SimplePromptGame({ category, cta = 'Next', hint, label }) {
   const source = usePromptSource(category)
   const { renderText } = useGame()
+  const { publishNow } = useRoom()
   const [prompt, setPrompt] = useState(null)
 
   const advance = () => {
     haptics.tap()
-    setPrompt(source.next())
+    const next = source.next()
+    setPrompt(next)
+    publishNow({ game: label, text: renderText(next.text) })
   }
 
   return (

@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { useGame } from '../state/GameContext.jsx'
 import { usePromptSource } from '../hooks/usePromptSource.js'
 import { randomItem } from '../utils.js'
+import { useRoom } from '../state/RoomContext.jsx'
 import { haptics } from '../haptics.js'
 
 export default function SpinWheel() {
   const { players, renderText } = useGame()
+  const { publishNow } = useRoom()
   const source = usePromptSource('wheel')
 
   const [spinning, setSpinning] = useState(false)
@@ -24,7 +26,9 @@ export default function SpinWheel() {
       if (ticks > 10) {
         clearInterval(iv)
         const who2 = players.length ? randomItem(players).name : 'Someone'
-        setResult({ who: who2, text: source.next()?.text ?? '' })
+        const phrase = source.next()?.text ?? ''
+        setResult({ who: who2, text: phrase })
+        publishNow({ game: 'Spin the Wheel', text: `${who2} ${renderText(phrase)}` })
         haptics.win()
         setSpinning(false)
       }

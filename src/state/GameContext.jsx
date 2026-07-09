@@ -90,6 +90,15 @@ export function GameProvider({ children }) {
   const removePlayer = (id) =>
     setPlayers((prev) => prev.filter((p) => p.id !== id))
 
+  const removePlayerByName = (name) =>
+    setPlayers((prev) => {
+      const i = prev.findIndex((p) => p.name.toLowerCase() === name.trim().toLowerCase())
+      if (i === -1) return prev
+      const next = [...prev]
+      next.splice(i, 1)
+      return next
+    })
+
   const clearPlayers = () => setPlayers([])
 
   const value = useMemo(
@@ -97,6 +106,7 @@ export function GameProvider({ children }) {
       players,
       addPlayer,
       removePlayer,
+      removePlayerByName,
       clearPlayers,
       spice,
       setSpice,

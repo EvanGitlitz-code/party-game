@@ -4,6 +4,7 @@ export default function MostLikelyTo() {
   return (
     <SimplePromptGame
       category="mostLikelyTo"
+      label="Most Likely To"
       cta="Next one"
       hint="On 3, everyone points. Most fingers pointed at you? Drink!"
     />

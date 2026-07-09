@@ -34,7 +34,9 @@ export default function About({ onBack }) {
             There are no accounts, no sign-ups, no ads, and no tracking. Your
             players, custom prompts, and settings are stored only on your own
             device (in your browser’s local storage) and never leave it. Clearing
-            the app’s data or your browser storage removes everything.
+            the app’s data or your browser storage removes everything. When you
+            play across phones, devices connect <strong>peer-to-peer</strong> and
+            game data passes directly between them — it isn’t stored on any server.
           </p>
         </section>
 

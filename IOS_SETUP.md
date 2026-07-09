@@ -72,10 +72,12 @@ npm run ios      # = build:app + cap sync ios + cap open ios
   **age gate** on launch, a **responsible-drinking notice**, and an
   **alcohol-free mode** that replaces every drink with a non-alcoholic
   mini-challenge. This directly addresses guideline **1.4.3**.
-- **Privacy**: in App Store Connect's privacy section, declare **no data
-  collected** — the app has no accounts, no analytics, no network calls; all
-  data stays on-device. You still must provide a **privacy policy URL** (host
-  the text from the in-app About screen).
+- **Privacy**: in App Store Connect's privacy section, you can declare **no data
+  collected** — the app has no accounts and no analytics, and stores everything
+  on-device. Cross-device multiplayer is **peer-to-peer** (WebRTC via PeerJS):
+  player names and prompts flow directly between phones and are **not stored on
+  any server**, so nothing is collected by you. You still must provide a
+  **privacy policy URL** (host the text from the in-app About screen).
 - **Trademark**: confirm you have the right to use the name "Pre Game"
   before submitting — it's a common pun and may be claimed by others.
 
