@@ -1,4 +1,4 @@
-# 🎲 Pour Decisions — Party Game Night
+# 🎲 Pre Game — Party Game Night
 
 A mobile-first party drinking game app that bundles several games behind one
 home screen. Add your friends, dial the spice level, and pick a game. Every
@@ -53,7 +53,7 @@ call-outs show up alongside the built-ins.
 
 ## 📲 Install & offline (PWA)
 
-Pour Decisions is a Progressive Web App. On a phone, open it in the browser and choose
+Pre Game is a Progressive Web App. On a phone, open it in the browser and choose
 **Add to Home Screen** — it installs like a native app (its own icon, full
 screen, no address bar) and works **offline** after the first load thanks to a
 service worker that caches the app shell.

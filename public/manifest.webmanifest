@@ -1,6 +1,6 @@
 {
-  "name": "Pour Decisions — Party Game Night",
-  "short_name": "Pour Decisions",
+  "name": "Pre Game — Party Game Night",
+  "short_name": "Pre Game",
   "description": "A mobile-first party drinking game app: roll, draw, dare, repeat.",
   "start_url": "./",
   "scope": "./",

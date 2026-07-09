@@ -20,7 +20,7 @@ function Home({ onPick, onCustom, onAbout }) {
   return (
     <div className="home">
       <header className="hero">
-        <h1 className="logo"><span>POUR</span><span>DECISIONS</span></h1>
+        <h1 className="logo"><span>PRE</span><span>GAME</span></h1>
         <p className="tagline">The party game night in your pocket 🍻</p>
       </header>
 

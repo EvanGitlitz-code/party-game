@@ -11,7 +11,7 @@ export default function AgeGate() {
     return (
       <div className="gate">
         <div className="gate-card">
-          <h1 className="gate-logo"><span>POUR</span><span>DECISIONS</span></h1>
+          <h1 className="gate-logo"><span>PRE</span><span>GAME</span></h1>
           <p className="gate-deny">
             No worries — come back when you’re of legal drinking age. 🚸
           </p>
@@ -24,7 +24,7 @@ export default function AgeGate() {
   return (
     <div className="gate">
       <div className="gate-card">
-        <h1 className="gate-logo"><span>POUR</span><span>DECISIONS</span></h1>
+        <h1 className="gate-logo"><span>PRE</span><span>GAME</span></h1>
         <p className="gate-tag">A party game for adults 🍻</p>
         <p className="gate-q">Are you of legal drinking age?</p>
         <p className="gate-note">

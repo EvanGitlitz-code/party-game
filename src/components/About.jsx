@@ -11,14 +11,14 @@ export default function About({ onBack }) {
       </header>
 
       <main className="about-body">
-        <h1 className="about-logo"><span>POUR</span><span>DECISIONS</span></h1>
+        <h1 className="about-logo"><span>PRE</span><span>GAME</span></h1>
         <p className="about-tag">The party game night in your pocket 🍻</p>
         <p className="about-version">Version {APP_VERSION}</p>
 
         <section className="about-block warn">
           <h2>🍻 Drink responsibly</h2>
           <p>
-            Pour Decisions is for adults of legal drinking age. Please play
+            Pre Game is for adults of legal drinking age. Please play
             responsibly, know your limits, and <strong>never drink and drive</strong>.
             No one should ever be pressured to drink — every prompt can be
             skipped. Prefer not to drink at all? Turn on <strong>Alcohol-free

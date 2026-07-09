@@ -1,4 +1,4 @@
-# 🍎 Building Pour Decisions for the iOS App Store
+# 🍎 Building Pre Game for the iOS App Store
 
 The app is wrapped for native iOS with [Capacitor](https://capacitorjs.com/).
 These steps run on a **Mac** (Apple requires macOS + Xcode to build and submit
@@ -40,9 +40,9 @@ npx cap open ios
 
 1. Select the **App** target → **Signing & Capabilities**:
    - Check **Automatically manage signing** and pick your **Team**.
-   - **Bundle Identifier**: `com.pourdecisions.app` (change to your own reverse-domain
-     if you prefer, e.g. `com.yourname.pourdecisions`).
-2. **General** tab: set the **Display Name** to `Pour Decisions` and a
+   - **Bundle Identifier**: `com.pregame.app` (change to your own reverse-domain
+     if you prefer, e.g. `com.yourname.pregame`).
+2. **General** tab: set the **Display Name** to `Pre Game` and a
    **Version** (1.0.0) and **Build** (1).
 3. Pick a simulator or your plugged-in iPhone and press **▶ Run** to test.
 
@@ -76,7 +76,7 @@ npm run ios      # = build:app + cap sync ios + cap open ios
   collected** — the app has no accounts, no analytics, no network calls; all
   data stays on-device. You still must provide a **privacy policy URL** (host
   the text from the in-app About screen).
-- **Trademark**: confirm you have the right to use the name "Pour Decisions"
+- **Trademark**: confirm you have the right to use the name "Pre Game"
   before submitting — it's a common pun and may be claimed by others.
 
 ## Notes

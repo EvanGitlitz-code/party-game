@@ -1,6 +1,6 @@
 {
-  "appId": "com.pourdecisions.app",
-  "appName": "Pour Decisions",
+  "appId": "com.pregame.app",
+  "appName": "Pre Game",
   "webDir": "dist",
   "backgroundColor": "#0b0b12",
   "ios": {
