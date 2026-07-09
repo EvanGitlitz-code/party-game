@@ -17,3 +17,12 @@ yarn-error.log*
 .idea/
 .DS_Store
 *.local
+
+# Capacitor / native (generated on the build machine)
+# The ios/ project itself SHOULD be committed once created; these are its
+# build artifacts and dependencies.
+ios/App/Pods/
+ios/App/App/public/
+ios/App/build/
+ios/DerivedData/
+.gradle/

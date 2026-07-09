@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { soberize } from '../data/soberize.js'
 
 const GameContext = createContext(null)
 
@@ -40,19 +41,24 @@ export function GameProvider({ children }) {
   })
   // Whether the user has confirmed they're of legal drinking age.
   const [ageVerified, setAgeVerified] = useState(saved?.ageVerified ?? false)
+  // Alcohol-free mode: swaps drink/sip prompts for challenges.
+  const [dryMode, setDryMode] = useState(saved?.dryMode ?? false)
 
   useEffect(() => {
     try {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ players, spice, customPrompts, ageVerified }),
+        JSON.stringify({ players, spice, customPrompts, ageVerified, dryMode }),
       )
     } catch {
       /* storage unavailable — fine, we just don't persist */
     }
-  }, [players, spice, customPrompts, ageVerified])
+  }, [players, spice, customPrompts, ageVerified, dryMode])
 
   const verifyAge = () => setAgeVerified(true)
+
+  // Rewrite drink language into challenge language when no-alcohol mode is on.
+  const renderText = (text) => (dryMode ? soberize(text) : text)
 
   const addCustomPrompt = (category, text, level) => {
     const clean = text.trim()
@@ -99,8 +105,11 @@ export function GameProvider({ children }) {
       removeCustomPrompt,
       ageVerified,
       verifyAge,
+      dryMode,
+      setDryMode,
+      renderText,
     }),
-    [players, spice, customPrompts, ageVerified],
+    [players, spice, customPrompts, ageVerified, dryMode],
   )
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>

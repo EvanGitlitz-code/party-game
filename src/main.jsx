@@ -13,8 +13,9 @@ createRoot(document.getElementById('root')).render(
 )
 
 // Register the service worker for offline / installable PWA support.
-// Only in production builds — the dev server doesn't serve /sw.js.
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
+// Only in production web builds — the dev server doesn't serve /sw.js, and the
+// native Capacitor app already bundles its assets locally (no SW needed).
+if ('serviceWorker' in navigator && import.meta.env.PROD && !window.Capacitor) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {
       /* offline support is a progressive enhancement — ignore failures */

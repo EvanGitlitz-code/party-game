@@ -21,7 +21,9 @@ export default function About({ onBack }) {
             Pour Decisions is for adults of legal drinking age. Please play
             responsibly, know your limits, and <strong>never drink and drive</strong>.
             No one should ever be pressured to drink — every prompt can be
-            skipped, and you can play with water, soda, or any drink you like.
+            skipped. Prefer not to drink at all? Turn on <strong>Alcohol-free
+            mode</strong> on the home screen and every drink becomes a
+            mini-challenge instead.
           </p>
         </section>
 

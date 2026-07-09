@@ -5,7 +5,7 @@ import { randomItem } from '../utils.js'
 import { haptics } from '../haptics.js'
 
 export default function SpinWheel() {
-  const { players } = useGame()
+  const { players, renderText } = useGame()
   const source = usePromptSource('wheel')
 
   const [spinning, setSpinning] = useState(false)
@@ -37,7 +37,7 @@ export default function SpinWheel() {
       {result && result.text ? (
         <div className="big-card roll">
           <span className="prompt-text">
-            <strong>{result.who}</strong> {result.text}
+            <strong>{result.who}</strong> {renderText(result.text)}
           </span>
         </div>
       ) : (

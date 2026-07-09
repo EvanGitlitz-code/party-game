@@ -7,7 +7,7 @@ import { haptics } from '../haptics.js'
 const PIPS = { 1: '⚀', 2: '⚁', 3: '⚂', 4: '⚃', 5: '⚄', 6: '⚅' }
 
 export default function LuckySevens() {
-  const { spice, players } = useGame()
+  const { spice, players, renderText } = useGame()
   const [dice, setDice] = useState([1, 1])
   const [outcome, setOutcome] = useState(null)
   const [rolling, setRolling] = useState(false)
@@ -43,8 +43,8 @@ export default function LuckySevens() {
       </div>
       {outcome ? (
         <div className="big-card roll">
-          <span className="kind-tag">{outcome.emoji} {outcome.name} · {outcome.sum}</span>
-          <span className="prompt-text">{outcome.text}</span>
+          <span className="kind-tag">{outcome.emoji} {renderText(outcome.name)} · {outcome.sum}</span>
+          <span className="prompt-text">{renderText(outcome.text)}</span>
         </div>
       ) : (
         <div className="big-card static">

@@ -7,6 +7,7 @@ import CustomPrompts from './components/CustomPrompts.jsx'
 import Instructions from './components/Instructions.jsx'
 import AgeGate from './components/AgeGate.jsx'
 import About from './components/About.jsx'
+import DryToggle from './components/DryToggle.jsx'
 
 function Home({ onPick, onCustom, onAbout }) {
   const [helpGame, setHelpGame] = useState(null)
@@ -25,6 +26,7 @@ function Home({ onPick, onCustom, onAbout }) {
 
       <PlayerSetup />
       <SpiceSlider />
+      <DryToggle />
 
       <section className="catalog">
         <h2>Pick a game</h2>
@@ -74,7 +76,7 @@ function Home({ onPick, onCustom, onAbout }) {
 }
 
 function GameView({ game, onBack }) {
-  const { spice } = useGame()
+  const { spice, dryMode } = useGame()
   const meta = SPICE_META[spice]
   const { Component } = game
   const [showHelp, setShowHelp] = useState(false)
@@ -91,6 +93,7 @@ function GameView({ game, onBack }) {
           >
             ?
           </button>
+          {dryMode && <span className="spice-pill" title="Alcohol-free mode">🚱</span>}
           <span className="spice-pill">{meta.emoji}</span>
         </div>
       </header>

@@ -17,7 +17,7 @@ function buildDeck() {
 }
 
 export default function KingsCup() {
-  const { spice } = useGame()
+  const { spice, renderText } = useGame()
   const [deck, setDeck] = useState(() => buildDeck())
   const [card, setCard] = useState(null)
 
@@ -54,8 +54,8 @@ export default function KingsCup() {
           <span className={`card-corner ${isRed ? 'red' : 'black'}`}>
             {card.rank}{card.suit}
           </span>
-          <span className="card-rule-title">{rule.title}</span>
-          <span className="card-rule-text">{ruleText}</span>
+          <span className="card-rule-title">{renderText(rule.title)}</span>
+          <span className="card-rule-text">{renderText(ruleText)}</span>
         </div>
       ) : (
         <div className="big-card static">

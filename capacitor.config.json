@@ -1,0 +1,10 @@
+{
+  "appId": "com.pourdecisions.app",
+  "appName": "Pour Decisions",
+  "webDir": "dist",
+  "backgroundColor": "#0b0b12",
+  "ios": {
+    "backgroundColor": "#0b0b12",
+    "contentInset": "always"
+  }
+}

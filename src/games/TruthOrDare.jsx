@@ -5,7 +5,7 @@ import { randomItem } from '../utils.js'
 import { haptics } from '../haptics.js'
 
 export default function TruthOrDare() {
-  const { players } = useGame()
+  const { players, renderText } = useGame()
   const truthSource = usePromptSource('truths')
   const dareSource = usePromptSource('dares')
 
@@ -48,7 +48,7 @@ export default function TruthOrDare() {
           ) : (
             <div className={`big-card ${result.kind}`}>
               <span className="kind-tag">{result.kind === 'truth' ? '💬 Truth' : '🔥 Dare'}</span>
-              <span className="prompt-text">{result.text}</span>
+              <span className="prompt-text">{renderText(result.text)}</span>
             </div>
           )}
           <button className="primary-btn" onClick={pickPlayer}>Next player</button>
